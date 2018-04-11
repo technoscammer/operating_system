@@ -3,19 +3,19 @@
 typedef struct
 {
 int process_id;
-float arrival_time, waiting_time, burst_time, turnaround_time, schedule_table;
+float arr_tim, wt_tim, brst_tim, tnarnd_tim, sch_tbl;
 bool isComplete;
 }process;
 
 
 void project(int i, process p[])
 {
-printf("Process id: ");
+printf("PROCESS ID: ");
 scanf("%d", &p[i].process_id);
-printf("Arrival Time: ");
-scanf("%f", &p[i].arrival_time);
-printf("Burst Time: ");
-scanf("%f", &p[i].burst_time);
+printf("ARRIVAL TIME: ");
+scanf("%f", &p[i].arr_tim);
+printf("BURST TIME: ");
+scanf("%f", &p[i].brst_tim);
 p[i].isComplete = false;
 }
 
@@ -28,7 +28,7 @@ for (k = start; k<i; k++)
 {
 for (j = k+1; j<i; j++)
 {
-if(p[k].burst_time < p[j].burst_time)
+if(p[k].brst_tim < p[j].brst_tim)
 continue;
 else
 {
@@ -42,7 +42,7 @@ p[j] = temp;
 int main()
 {
 int n, i, k = 0, j = 0;
-float avgwaiting_time = 0.0, avgturnaround_time = 0.0, tst = 0.0;
+float avgwt_tim = 0.0, avgtnarnd_tim = 0.0, tst = 0.0;
 printf("Enter the number of processes: ");
 scanf("%d",&n);
 process p[n];
@@ -58,29 +58,29 @@ continue;
 else
 {
 k = i;
-while (p[i].arrival_time<=tst && i<n)
+while (p[i].arr_tim<=tst && i<n)
 i++;
 sort (p,i,k);
 i = k;
-if(p[i].arrival_time<=tst)
-p[i].schedule_table = tst;
+if(p[i].arr_tim<=tst)
+p[i].sch_tbl = tst;
 else
-p[i].schedule_table = p[i].arrival_time;
-p[i].schedule_table = tst;
+p[i].sch_tbl = p[i].arr_tim;
+p[i].sch_tbl = tst;
 p[i].isComplete = true;
-tst += p[i].burst_time;
-p[i].waiting_time = p[i].schedule_table - p[i].arrival_time;
-p[i].turnaround_time = p[i].burst_time + p[i].waiting_time;
-avgwaiting_time += p[i].waiting_time;
-avgturnaround_time += p[i].turnaround_time;
+tst += p[i].brst_tim;
+p[i].wt_tim = p[i].sch_tbl - p[i].arr_tim;
+p[i].tnarnd_tim = p[i].brst_tim + p[i].wt_tim;
+avgwt_tim += p[i].wt_tim;
+avgtnarnd_tim += p[i].tnarnd_tim;
 }
 }
-avgwaiting_time /= n;
-avgturnaround_time /= n;
-printf("Process Schedule Table: \n");
-printf("\tProcess ID \t Arrival Time \t Burst Time \t Wait Time \t Turnaround Time\n");
+avgwt_tim /= n;
+avgtnarnd_tim /= n;
+printf("PROCESS SCHEDULE TABLE: \n");
+printf("\tPROCESS ID \t ARRIVAL TIME \t BURST TIME \t WAIT TIME \t TURNAROUND TIME\n");
 for (i = 0; i<n; i++)
-printf("\t%d\t\t%f\t%f\t%f\t%f\n", p[i].process_id,p[i].arrival_time, p[i].burst_time, p[i].waiting_time, p[i].turnaround_time);
-printf("\nAverage wait time: %f", avgwaiting_time);
-printf("\nAverage turnaround time: %f\n", avgturnaround_time);
+printf("\t%d\t\t%f\t%f\t%f\t%f\n", p[i].process_id,p[i].arr_tim, p[i].brst_tim, p[i].wt_tim, p[i].tnarnd_tim);
+printf("\nAVERAGE WAIT TIME: %f", avgwt_tim);
+printf("\nAVERAGE TURNAROUND TIME: %f\n", avgtnarnd_tim);
 }
